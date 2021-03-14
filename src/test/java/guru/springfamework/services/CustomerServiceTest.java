@@ -78,7 +78,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void save() {
+    public void insert() {
 
         //given
         CustomerDTO customerDTO = new CustomerDTO();
@@ -93,7 +93,32 @@ public class CustomerServiceTest {
         when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
 
         //when
-        CustomerDTO savedDTO = customerService.save(customerDTO);
+        CustomerDTO savedDTO = customerService.insert(customerDTO);
+
+        //then
+        assertEquals(ID, savedDTO.getId());
+        assertEquals(FIRST_NAME, savedDTO.getFirstname());
+        assertEquals(LAST_NAME, savedDTO.getLastname());
+        assertEquals("/api/v1/customers/2", savedDTO.getCustomerUrl());
+    }
+
+    @Test
+    public void update() {
+
+        //given
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstname(FIRST_NAME);
+        customerDTO.setLastname(LAST_NAME);
+
+        Customer savedCustomer = new Customer();
+        savedCustomer.setId(ID);
+        savedCustomer.setFirstname(FIRST_NAME);
+        savedCustomer.setLastname(LAST_NAME);
+
+        when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
+
+        //when
+        CustomerDTO savedDTO = customerService.update(ID, customerDTO);
 
         //then
         assertEquals(ID, savedDTO.getId());
