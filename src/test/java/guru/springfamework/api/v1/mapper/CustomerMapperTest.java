@@ -1,12 +1,10 @@
 package guru.springfamework.api.v1.mapper;
 
-import guru.springfamework.api.v1.model.CategoryDTO;
 import guru.springfamework.api.v1.model.CustomerDTO;
-import guru.springfamework.domain.Category;
 import guru.springfamework.domain.Customer;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class CustomerMapperTest {
 
@@ -33,5 +31,20 @@ public class CustomerMapperTest {
         assertEquals(Long.valueOf(ID), customerDTO.getId());
         assertEquals(FIRST_NAME, customerDTO.getFirstname());
         assertEquals(LAST_NAME, customerDTO.getLastname());
+    }
+
+    @Test
+    public void customerDtoToCustomer() {
+        //given
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setFirstname(FIRST_NAME);
+        customerDTO.setLastname(LAST_NAME);
+
+        //when
+        Customer customer = customerMapper.customerDtoToCustomer(customerDTO);
+
+        //then
+        assertEquals(FIRST_NAME, customer.getFirstname());
+        assertEquals(LAST_NAME, customer.getLastname());
     }
 }
