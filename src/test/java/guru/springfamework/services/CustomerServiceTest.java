@@ -15,8 +15,10 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -56,7 +58,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void getCustomerByName() throws Exception {
+    public void getCustomerById() throws Exception {
 
         //given
         Customer customer = new Customer();
@@ -64,10 +66,10 @@ public class CustomerServiceTest {
         customer.setFirstname(FIRST_NAME);
         customer.setLastname(LAST_NAME);
 
-        when(customerRepository.findByFirstname(anyString())).thenReturn(customer);
+        when(customerRepository.findById(anyLong())).thenReturn(Optional.of(customer));
 
         //when
-        CustomerDTO customerDTO = customerService.getCustomerByName(FIRST_NAME);
+        CustomerDTO customerDTO = customerService.getCustomerById(ID);
 
         //then
         assertEquals(ID, customerDTO.getId());
